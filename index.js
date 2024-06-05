@@ -57,13 +57,10 @@ console.log('--------------');
 
 // Your code
 function sortPlayerNames(){
-    let playerArr = []
+    const playerArr = playerData.map((player) => player.name);
 
-    for(let i = 0; i < playerData.length; i++){
-        playerArr.push(playerData[i].name);
-    }
-
-    console.log(playerArr.sort((a, b) => b.length - a.length || b.localeCompare(a)))
+    // Logs array in descending order of size, or alphabetically where names are equal in length
+    console.log(playerArr.sort((a, b) => b.length - a.length || b.localeCompare(a)));
 }
 
 console.log('--- TEST 2 ---');
@@ -99,14 +96,14 @@ console.log('--------------');
  */
 
 // Your code
-function getPositionByName(playerName){
-    for(let i = 0; i < playerData.length; i++){
-        if (playerData[i].name === playerName){
-            return console.log(`${playerName} is a ${playerData[i].position.toLowerCase()}.`);
-        }
+const getPositionByName = (playerName) => {
+    const foundPlayer = playerData.find((player) => player.name === playerName);
+
+    if (!foundPlayer){
+        return console.log(`Player ${playerName} not found.`);
     }
 
-    return console.log(`Player ${playerName} not found.`);
+    return console.log(`${playerName} is a ${foundPlayer.position.toLowerCase()}.`);
 }
 
 console.log('--- TEST 4: SUCCESS ---');
@@ -125,6 +122,7 @@ console.log('-----------------------');
  */
 
 // Your code
+// Randomly shuffle the index positions of given array
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -134,16 +132,16 @@ function shuffle(array) {
     return array;
 }
 
-function getRoundedGoals(playerData){
-    let scoringTotal = 0
+// Return the average goals for given team, rounded to nearest whole number
+function getRoundedGoals(team){
+    let scoringTotal = 0;
 
-    for(let i = 0; i < playerData.length; i++){
-        scoringTotal += parseInt(playerData[i].scoringChance);
-    }
+    team.map((player) => scoringTotal += parseInt(player.scoringChance));
 
     return Math.round(scoringTotal / 100);
 }
 
+// Split players into two randomised teams, calculate goals scored and declare a winner or a draw
 function splitPlayers(playerData){
     if(playerData.length % 2 !== 0){
         return console.log("Error: Equal number of players required per team.");
