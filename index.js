@@ -1,6 +1,30 @@
 // We import the object from the data file. Inside that object there is a function to get players data
 const data = require("./data");
 
+const playerData = data.getPlayers();
+// console.log(playerData);
+
+const testData = [
+    {
+        name: "Jotaro",
+        lastname: "Kujo",
+        position: "forward",
+        scoringChance: 45
+    },
+    {
+        name: "Kakyoin",
+        lastname: "Noriaki",
+        position: "forward",
+        scoringChance: 32
+    },
+    {
+        name: "Jean-Pierre",
+        lastname: "Polnareff",
+        position: "midfielder",
+        scoringChance: 18
+    },
+]
+
 /**
  * Test 1
  * Write a function to log in the console the players data with this format:
@@ -12,8 +36,16 @@ const data = require("./data");
  */
 
  // Your code
+function displayPlayerData(){
+    for(let i = 0; i < playerData.length; i++){
+        console.log(`PLAYER ${i + 1}`)
+        console.log(`NAME: ${playerData[i].name}`);
+        console.log(`LASTNAME: ${playerData[i].lastname}`);
+        console.log(`POSITION: ${playerData[i].position}`);
+    }
+}
 
-
+// displayPlayerData();
 
 /**
  * Test 2
@@ -21,10 +53,17 @@ const data = require("./data");
  */
 
 // Your code
+function sortPlayerNames(){
+    let playerArr = []
 
+    for(let i = 0; i < playerData.length; i++){
+        playerArr.push(playerData[i].name);
+    }
 
+    console.log(playerArr.sort((a, b) => b.length - a.length || b.localeCompare(a)))
+}
 
-
+// sortPlayerNames();
 
 /**
  * Test 3
@@ -35,8 +74,17 @@ const data = require("./data");
  */
 
 // Your code
+function calculateGoals(){
+    let scoringTotal = 0
 
+    for(let i = 0; i < playerData.length; i++){
+        scoringTotal += parseInt(playerData[i].scoringChance);
+    }
 
+    console.log(scoringTotal / 100);
+}
+
+// calculateGoals();
 
 /**
  * Test 4
@@ -44,7 +92,18 @@ const data = require("./data");
  */
 
 // Your code
+function getPositionByName(playerName){
+    for(let i = 0; i < playerData.length; i++){
+        if (playerData[i].name === playerName){
+            return console.log(playerData[i].position);
+        }
+    }
 
+    return console.log(`Player ${playerName} not found.`);
+}
+
+// getPositionByName('Ethan');
+// getPositionByName('Dio Brando');
 
 
 /**
@@ -57,3 +116,44 @@ const data = require("./data");
  */
 
 // Your code
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
+}
+
+function getRoundedGoals(playerData){
+    let scoringTotal = 0
+
+    for(let i = 0; i < playerData.length; i++){
+        scoringTotal += parseInt(playerData[i].scoringChance);
+    }
+
+    return Math.round(scoringTotal / 100);
+}
+
+function splitPlayers(playerData){
+    if(playerData.length % 2 !== 0){
+        return console.log("Error: Equal number of players required per team");
+    }
+    let shuffledArray = shuffle([...playerData]);
+    let teamA = shuffledArray.splice(0, (shuffledArray.length / 2));
+    let teamB = shuffledArray;
+
+    const teamAScore = getRoundedGoals(teamA);
+    const teamBScore = getRoundedGoals(teamB);
+
+    if(teamAScore === teamBScore){
+        console.log(`It's a draw at ${teamAScore} all!`);
+    } else if(teamAScore > teamBScore) {
+        console.log(`Team A wins with a score of ${teamAScore} to ${teamBScore}!`);
+    } else {
+        console.log(`Team B wins with a score of ${teamBScore} to ${teamAScore}!`)
+    }
+}
+
+splitPlayers(playerData);
+// splitPlayers(testData);
