@@ -1,9 +1,10 @@
 // We import the object from the data file. Inside that object there is a function to get players data
 const data = require("./data");
 
+// Get data array for use in functions
 const playerData = data.getPlayers();
-// console.log(playerData);
 
+// Dummy data to test functions
 const testData = [
     {
         name: "Jotaro",
@@ -45,7 +46,9 @@ function displayPlayerData(){
     }
 }
 
-// displayPlayerData();
+console.log('--- TEST 1 ---');
+displayPlayerData();
+console.log('--------------');
 
 /**
  * Test 2
@@ -63,7 +66,9 @@ function sortPlayerNames(){
     console.log(playerArr.sort((a, b) => b.length - a.length || b.localeCompare(a)))
 }
 
-// sortPlayerNames();
+console.log('--- TEST 2 ---');
+sortPlayerNames();
+console.log('--------------');
 
 /**
  * Test 3
@@ -81,10 +86,12 @@ function calculateGoals(){
         scoringTotal += parseInt(playerData[i].scoringChance);
     }
 
-    console.log(scoringTotal / 100);
+    console.log('Goals per match: ' + scoringTotal / 100);
 }
 
-// calculateGoals();
+console.log('--- TEST 3 ---');
+calculateGoals();
+console.log('--------------');
 
 /**
  * Test 4
@@ -95,16 +102,18 @@ function calculateGoals(){
 function getPositionByName(playerName){
     for(let i = 0; i < playerData.length; i++){
         if (playerData[i].name === playerName){
-            return console.log(playerData[i].position);
+            return console.log(`${playerName} is a ${playerData[i].position.toLowerCase()}.`);
         }
     }
 
     return console.log(`Player ${playerName} not found.`);
 }
 
-// getPositionByName('Ethan');
-// getPositionByName('Dio Brando');
-
+console.log('--- TEST 4: SUCCESS ---');
+getPositionByName('Bernd');
+console.log('--- TEST 4: FAILURE ---');
+getPositionByName('Dio Brando');
+console.log('-----------------------');
 
 /**
  * Test 5
@@ -137,7 +146,7 @@ function getRoundedGoals(playerData){
 
 function splitPlayers(playerData){
     if(playerData.length % 2 !== 0){
-        return console.log("Error: Equal number of players required per team");
+        return console.log("Error: Equal number of players required per team.");
     }
     let shuffledArray = shuffle([...playerData]);
     let teamA = shuffledArray.splice(0, (shuffledArray.length / 2));
@@ -155,5 +164,8 @@ function splitPlayers(playerData){
     }
 }
 
+console.log('--- TEST 5: SUCCESS ---');
 splitPlayers(playerData);
-// splitPlayers(testData);
+console.log('--- TEST 5: FAILURE ---');
+splitPlayers(testData);
+console.log('-----------------------');
