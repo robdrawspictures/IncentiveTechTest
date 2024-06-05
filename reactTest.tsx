@@ -74,7 +74,7 @@ export const Test2Component = (props: ITest2ComponentProps) => {
         return <p>Now loading...</p>
     }
 
-    return <p style={{color:age >= 18 ? 'blue' : 'red'}}>{props.name}</p>
+    return <p><span style={{color:age >= 18 ? 'blue' : 'red'}}>{props.name}</span> is {age} years old.</p>
 }
 
 
